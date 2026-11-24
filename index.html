@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>InvoiceCraft Studio — Instant Client Invoice Generator</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <aside class="editor no-print">
+      <h1>InvoiceCraft</h1>
+      <label>Business Name <input id="bizName" value="Makhara Consulting" /></label>
+      <label>Client Name <input id="clientName" value="Acme Operations LLC" /></label>
+      <label>Invoice # <input id="invNo" value="INV-2026-042" /></label>
+      <label>Currency
+        <select id="currency">
+          <option value="$">USD ($)</option>
+          <option value="₹">INR (₹)</option>
+          <option value="€">EUR (€)</option>
+          <option value="£">GBP (£)</option>
+          <option value="AED ">AED</option>
+        </select>
+      </label>
+      <label>Tax (%) <input id="taxRate" type="number" value="10" min="0" max="50" /></label>
+      <hr />
+      <h3>Add Line Item</h3>
+      <form id="itemForm">
+        <input id="itemDesc" placeholder="Service or item description" required />
+        <div class="row">
+          <input id="itemQty" type="number" min="1" value="1" required />
+          <input id="itemPrice" type="number" min="0" step="0.01" placeholder="Unit Price" required />
+        </div>
+        <button class="btn" type="submit">+ Add Item</button>
+      </form>
+      <button class="btn primary" onclick="window.print()">Print / Save PDF</button>
+    </aside>
+
+    <main class="sheet" id="invoiceSheet">
+      <div class="sheet-head">
+        <div>
+          <h2 id="outBiz">Makhara Consulting</h2>
+          <p class="muted">Professional Services Invoice</p>
+        </div>
+        <div class="right">
+          <div class="inv-tag">INVOICE</div>
+          <div id="outNo">INV-2026-042</div>
+          <div id="outDate" class="muted"></div>
+        </div>
+      </div>
+      <div class="bill-to">
+        <span class="muted">BILL TO</span>
+        <strong id="outClient">Acme Operations LLC</strong>
+      </div>
+      <table>
+        <thead><tr><th>Description</th><th class="num">Qty</th><th class="num">Rate</th><th class="num">Total</th><th class="no-print"></th></tr></thead>
+        <tbody id="outRows"></tbody>
+      </table>
+      <div class="totals">
+        <div><span>Subtotal</span><span id="outSub">$0.00</span></div>
+        <div><span>Tax (<span id="outTaxPct">10</span>%)</span><span id="outTax">$0.00</span></div>
+        <div class="grand"><span>Total Due</span><span id="outGrand">$0.00</span></div>
+      </div>
+    </main>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
